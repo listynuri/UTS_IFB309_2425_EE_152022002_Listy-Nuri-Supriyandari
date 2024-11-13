@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Sensor Suhu & Kelembaban</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+        }
+        h1 {
+            background-color: #d8b1d6;
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .card {
+            background-color: #fff;
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .icon {
+            font-size: 40px;
+            color: #d470a2;
+            margin-bottom: 10px;
+        }
+        .refresh-button {
+            background-color: #d8b1d6;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            display: block;
+            margin: 20px auto;
+        }
+        .refresh-button:hover {
+            background-color: #b480b2;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Data Sensor Suhu & Kelembaban</h1>
+
+    <div class="container">
+        <!-- Suhu Data Cards (Sejajar dalam satu baris) -->
+        <div class="row text-center mb-4 justify-content-center">
+            <div class="col-md-3">
+                <div class="card p-3">
+                    <div class="icon">🌡️</div>
+                    <h5>Suhu Maksimum</h5>
+                    <p id="suhuMax">- °C</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card p-3">
+                    <div class="icon">🌡️</div>
+                    <h5>Suhu Minimum</h5>
+                    <p id="suhuMin">- °C</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card p-3">
+                    <div class="icon">🌡️</div>
+                    <h5>Suhu Rata-rata</h5>
+                    <p id="suhuRate">- °C</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Humidity Max Data Section -->
+        <h4 class="text-center">Nilai Suhu dan Kelembaban Maksimum</h4>
+        <div id="humidMaxContainer" class="row text-center mb-4">
+            <!-- Data akan dimuat di sini oleh JavaScript -->
+        </div>
+
+        <!-- Month-Year Max Section -->
+        <h4 class="text-center">Month Year Max</h4>
+        <div id="monthYearMaxContainer" class="row text-center">
+            <!-- Data akan dimuat di sini oleh JavaScript -->
+        </div>
+
+        <!-- Refresh Button -->
+        <button class="refresh-button" onclick="fetchData()">Refresh Data</button>
+    </div>
+
+    <script>
+        // Fungsi untuk mengambil data dari API get.php
+        async function fetchData() {
+            try {
+                const response = await fetch('get.php');
+                const data = await response.json();
+                updateUI(data);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        }
+
+        // Fungsi untuk memperbarui UI dengan data yang diterima dari API
+        function updateUI(data) {
+            // Memperbarui data suhu
+            document.getElementById("suhuMax").textContent = `${data.suhu_max} °C`;
+            document.getElementById("suhuMin").textContent = `${data.suhu_min} °C`;
+            document.getElementById("suhuRate").textContent = `${data.suhu_rate} °C`;
+
+            // Memperbarui data kelembaban maksimum pada suhu maksimum
+            const humidMaxContainer = document.getElementById("humidMaxContainer");
+            humidMaxContainer.innerHTML = "";  // Reset container
+            if (data.nilai_suhu_max_humid_max && data.nilai_suhu_max_humid_max.length > 0) {
+                data.nilai_suhu_max_humid_max.forEach(record => {
+                    humidMaxContainer.innerHTML += `
+                        <div class="col-md-6">
+                            <div class="card p-3 mb-3">
+                                <p><strong>Index:</strong> ${record.idx}</p>
+                                <p><strong>Suhu Max:</strong> ${record.suhu} °C</p>
+                                <p><strong>Kelembaban:</strong> ${record.humid}%</p>
+                                <p><strong>Kecerahan:</strong> ${record.kecerahan}</p>
+                                <p><strong>Timestamp:</strong> ${record.timestamp}</p>
+                            </div>
+                        </div>
+                    `;
+                });
+            } else {
+                humidMaxContainer.innerHTML = "<p>Data tidak tersedia.</p>";
+            }
+
+            // Memperbarui data bulan-tahun untuk suhu maksimum (hanya menampilkan 09-2010 dan 05-2011)
+            const monthYearMaxContainer = document.getElementById("monthYearMaxContainer");
+            monthYearMaxContainer.innerHTML = "";  // Reset container
+            const monthYearFiltered = data.month_year_max.filter(record => 
+                record.month_year === "09-2010" || record.month_year === "05-2011"
+            );
+
+            if (monthYearFiltered.length > 0) {
+                monthYearFiltered.forEach(record => {
+                    monthYearMaxContainer.innerHTML += `
+                        <div class="col-md-6">
+                            <div class="card p-3 mb-3">
+                                <p><strong>📅 ${record.month_year}</strong></p>
+                            </div>
+                        </div>
+                    `;
+                });
+            } else {
+                monthYearMaxContainer.innerHTML = "<p>Data tidak tersedia.</p>";
+            }
+        }
+
+        // Memuat data saat halaman dibuka
+        window.onload = fetchData;
+    </script>
+
+</body>
+</html>

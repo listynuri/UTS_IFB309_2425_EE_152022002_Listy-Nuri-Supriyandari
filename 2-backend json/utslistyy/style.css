@@ -1,0 +1,110 @@
+/* Reset Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Global Styles */
+body {
+    background-color: #f0f4f8; /* Light background */
+    color: #333; /* Default text color */
+}
+
+header {
+    background-color: #d0a1e1; /* Light purple background */
+    padding: 1em;
+    color: #fff; /* White text */
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+header .logo h1 {
+    font-size: 1.5em;
+}
+
+main {
+    padding: 2em;
+}
+
+footer {
+    text-align: center;
+    padding: 1em;
+    background-color: #d0a1e1; /* Light purple background */
+    color: #fff; /* White text */
+    font-size: 0.9em;
+    margin-top: 2em;
+}
+
+/* Data Summary Styles */
+.data-summary {
+    display: flex;
+    gap: 1em;
+    justify-content: center;
+    margin-bottom: 2em;
+}
+
+.summary-item {
+    background: #fff; /* White background */
+    padding: 1em;
+    flex: 1;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.summary-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+}
+
+.summary-item i {
+    font-size: 2em;
+    color: #d0a1e1; /* Light purple icon color */
+    margin-bottom: 0.5em;
+}
+
+/* Data Details Styles */
+.data-details, .month-year {
+    margin-bottom: 2em;
+    text-align: center;
+}
+
+.data-details h2, .month-year h2 {
+    font-size: 1.5em;
+    color: #333;
+    margin-bottom: 1em;
+}
+
+.data-container, .month-year-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1em;
+}
+
+.data-item, .month-year-container p {
+    background: #fff; /* White background */
+    padding: 1em;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 200px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.data-item:hover, .month-year-container p:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+}
+
+.data-item p, .month-year-container p {
+    margin: 0.5em 0;
+    font-size: 0.9em;
+}
+
+.data-item i, .month-year-container i {
+    color: #d0a1e1; /* Light purple icon color */
+    margin-right: 0.5em;
+}

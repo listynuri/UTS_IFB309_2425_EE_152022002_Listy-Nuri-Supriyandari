@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Sensor Suhu & Kelembaban</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>Data Sensor Suhu & Kelembaban</h1>
+        </div>
+    </header>
+
+    <main>
+        <section class="data-summary">
+            <div class="summary-item">
+                <i class="fas fa-thermometer-half"></i>
+                <p><strong>Suhu Maksimum:</strong> <span id="suhuMax">-</span></p>
+            </div>
+            <div class="summary-item">
+                <i class="fas fa-thermometer-quarter"></i>
+                <p><strong>Suhu Minimum:</strong> <span id="suhuMin">-</span></p>
+            </div>
+            <div class="summary-item">
+                <i class="fas fa-thermometer-three-quarters"></i>
+                <p><strong>Suhu Rata-rata:</strong> <span id="suhuRata">-</span></p>
+            </div>
+        </section>
+
+        <section class="data-details">
+            <h2>Nilai Suhu dan Kelembaban Maksimum</h2>
+            <div id="dataDisplay" class="data-container">
+                <!-- Data JSON akan muncul di sini -->
+            </div>
+        </section>
+
+        <section class="month-year">
+            <h2>Month Year Max</h2>
+            <div id="monthYearMax" class="month-year-container">
+                <!-- Month Year Data akan muncul di sini -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 PemIOT Listy - All rights reserved</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
